@@ -73,9 +73,9 @@ module.exports = (grunt) ->
         tasks:['sass']
       serverJade: 
         files: ["Dev/server/views/*"]
-        tasks:['copy']
+        tasks:['copy', 'wiredep']
       livereload:
         options:
           livereload:35729
-        files: ["Build/client/**/*", "!Build/client/css/*.map", "Build/server/views/.*"]
+        files: ["Build/client/**/*", "!Build/client/css/*.map", "Build/server/views/*"]
   )

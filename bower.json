@@ -1,0 +1,19 @@
+{
+  "name": "template",
+  "version": "0.0.0",
+  "authors": [
+    "Ryan Poole <rmp135@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vue": "~0.12.1",
+    "prefixfree": "*"
+  }
+}

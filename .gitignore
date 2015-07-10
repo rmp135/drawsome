@@ -5,3 +5,4 @@ bower_components
 .sass-cache
 .DS_Store
 npm-debug.log
+.sublime-grunt.cache

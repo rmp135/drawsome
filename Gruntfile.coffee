@@ -2,9 +2,37 @@ module.exports = (grunt) ->
   webpack = require 'webpack'
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
-  grunt.registerTask 'build', ['coffeelint', 'clean', 'sass', 'coffee', 'webpack', 'copy', 'wiredep']
+  grunt.registerTask 'build', ['clean', 'sass', 'coffee', 'webpack', 'copy', 'wiredep']
+  grunt.registerTask 'test', ['karma', 'mochaTest']
 
   grunt.initConfig(
+    karma:
+      unit: 
+        options:
+          frameworks: ['bower', 'mocha', 'chai']
+          bowerPackages: ['vue'] # Load bower packages here.
+          singleRun:true
+          browsers:['PhantomJS']
+          files:["Dev/client/**/*Tests.coffee"]
+          preprocessors:
+            'Dev/client/**/*.coffee': ['webpack']
+          webpackMiddleware:
+            noInfo:true
+          webpack:
+            resolve:
+              # Additioaal resolvers; should be the same as webpack.
+              modulesDirectories: ['./services', './components', './filters']
+            module:
+              loaders: [
+                { test: /\.coffee$/, loader: 'coffee-loader' }
+                { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee-loader?literate" }
+              ]
+    mochaTest:
+      test:
+        options:
+          reporter: 'spec'
+          require: 'coffee-script/register'
+        src: ["Dev/server/**/*Tests.coffee"]
     wiredep:
       task:
         src:'Build/server/views/base.jade'
@@ -45,14 +73,6 @@ module.exports = (grunt) ->
           cwd:'Dev/server/'
           ext:'.js'
           ]
-
-    coffeelint:
-      files: ["Dev/server/**/*.coffee", "Dev/client/coffee/*.coffee"]
-      options:
-        'max_line_length':
-          'level':'ignore'
-        'no_interpolation_in_single_quotes':
-          'level':'warn'
 
     copy:
       devToTest:

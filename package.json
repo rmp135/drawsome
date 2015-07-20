@@ -39,6 +39,7 @@
     "karma-phantomjs-launcher": "^0.2.0",
     "karma-webpack": "^1.5.1",
     "matchdep": "^0.3.0",
+    "template-html-loader": "0.0.3",
     "webpack": "^1.9.10",
     "wiredep": "^2.2.2"
   }

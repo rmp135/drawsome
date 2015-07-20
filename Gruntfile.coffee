@@ -26,6 +26,7 @@ module.exports = (grunt) ->
               loaders: [
                 { test: /\.coffee$/, loader: 'coffee-loader' }
                 { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee-loader?literate" }
+                { test: /\.jade$/, loader: 'template-html-loader' }
               ]
     mochaTest:
       test:
@@ -54,7 +55,12 @@ module.exports = (grunt) ->
         output:
           path: './Build/client/js/'
           filename: 'app.js'
-        module: loaders: [ {test: /\.coffee$/, loader: 'coffee-loader'} ]          
+        module:
+          loaders: [
+            { test: /\.coffee$/, loader: 'coffee-loader' }
+            { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee-loader?literate" }
+            { test: /\.jade$/, loader: 'template-html-loader' }
+          ]
     sass:
       compile:
         files: [

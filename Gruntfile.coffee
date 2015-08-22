@@ -50,11 +50,12 @@ module.exports = (grunt) ->
         ]
         plugins:[
           # Comment to disable minification.
-          new webpack.optimize.UglifyJsPlugin()
+          # new webpack.optimize.UglifyJsPlugin()
         ]
         output:
           path: './Build/client/js/'
           filename: 'app.js'
+          pathinfo:true
         module:
           loaders: [
             { test: /\.coffee$/, loader: 'coffee-loader' }

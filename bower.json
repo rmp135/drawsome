@@ -13,7 +13,8 @@
     "tests"
   ],
   "dependencies": {
-    "vue": "~0.12.1",
-    "prefixfree": "*"
+    "prefixfree": "*",
+    "stats.js": "*",
+    "vue": "~0.12.1"
   }
 }

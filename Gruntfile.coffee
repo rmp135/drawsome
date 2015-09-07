@@ -27,6 +27,7 @@ module.exports = (grunt) ->
                 { test: /\.coffee$/, loader: 'coffee-loader' }
                 { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee-loader?literate" }
                 { test: /\.jade$/, loader: 'template-html-loader' }
+                { test: /\.json$/, loader: 'json-loader' }
               ]
     mochaTest:
       test:
@@ -61,6 +62,7 @@ module.exports = (grunt) ->
             { test: /\.coffee$/, loader: 'coffee-loader' }
             { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee-loader?literate" }
             { test: /\.jade$/, loader: 'template-html-loader' }
+            { test: /\.json$/, loader: 'json-loader' }
           ]
     sass:
       compile:

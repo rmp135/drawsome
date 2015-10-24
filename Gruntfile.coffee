@@ -2,12 +2,12 @@ module.exports = (grunt) ->
   webpack = require 'webpack'
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
-  grunt.registerTask 'build', ['clean', 'sass', 'coffee', 'webpack', 'copy', 'wiredep']
+  grunt.registerTask 'build', ['coffeelint', 'clean', 'sass', 'coffee', 'webpack', 'copy', 'wiredep']
   grunt.registerTask 'test', ['karma', 'mochaTest']
 
   grunt.initConfig(
     karma:
-      unit: 
+      unit:
         options:
           frameworks: ['bower', 'mocha', 'chai']
           bowerPackages: ['vue'] # Load bower packages here.
@@ -73,7 +73,7 @@ module.exports = (grunt) ->
           cwd:'Dev/client/scss',
           ext:'.css'
           ]
-    coffee: 
+    coffee:
       server:
         files: [
           expand:true
@@ -92,7 +92,14 @@ module.exports = (grunt) ->
 
     clean:
       build:["./Build"]
-        
+
+    coffeelint:
+      client:['Dev/client/coffee/**/*.coffee']
+      server:['Dev/server/**/*.coffee']
+      options:
+        'max_line_length':
+          'level':'ignore'
+
     watch:
       client:
         files: ["Dev/client/coffee/**/*.coffee"]
@@ -100,7 +107,7 @@ module.exports = (grunt) ->
       clientSass:
         files: ["Dev/client/scss/*.scss"]
         tasks:['sass']
-      serverJade: 
+      serverJade:
         files: ["Dev/server/views/*"]
         tasks:['copy', 'wiredep']
       livereload:

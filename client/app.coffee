@@ -1,7 +1,21 @@
 require './style.scss'
-Vue = require 'Vue'
+vue = require 'vue'
+vuerouter = require 'vue-router'
+require 'socket.io-client'
 
-app = new Vue {
-  el:"#app"
-  components:[require './components/comp.vue']
-}
+vue.use vuerouter
+router = new vuerouter()
+vue.use require 'vue-resource'
+
+router.map
+  '/':
+    name:'join'
+    component: require './views/join-view.vue'
+  '/host/:gameId':
+    name:'host'
+    component: require './views/host-view.vue'
+  '/play/:gameId':
+    name:'play'
+    component: require './views/play-view.vue'
+
+router.start {}, '#app'

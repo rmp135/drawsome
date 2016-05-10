@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "coffee ./server/server.coffee"
+    "start": "coffee ./server/run.coffee"
   },
   "dependencies": {
     "body-parser": "~1.12.4",

@@ -30,7 +30,6 @@
 
 <template lang="pug">
   #play-comp
-    div(v-for="player in gameStore.game.players") {{player.name}}
     play-pregame-comp(v-if="gameStage == 'PREGAME'", :game="gameStore.game", :player="playerStore.player")
     play-avatar-comp(v-if="gameStage == 'AVATAR'", :game="gameStore.game", :player="playerStore.player")
     play-draw-comp(v-if="gameStage == 'DRAW'", :game="gameStore.game", :player="playerStore.player")

@@ -29,7 +29,6 @@
     input(v-model="code").form-control
     input(v-model="playerStore.player.name").form-control
     button(@click="onJoinClick", :disabled="!canJoin", :class="{disabled:!canJoin}").btn.btn-default Join
-    //- canvas-comp(v-bind:lines.sync="lines", width="500")
 </template>
 
 <style lang="scss">

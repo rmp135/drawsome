@@ -10,13 +10,19 @@
         requird:true
     data: ->
       guess:""
+      error:""
     methods:
       onGuessDone: ->
         @$http.post "/api/game/#{@game.id}/#{@player.name}",{command:'READY', guess:@guess}
+        .catch (err) ->
+          if err.status is 400
+            @error = err.data
+            @guess = ""
 </script>
 
 <template lang="pug">
   #play-guess-comp
+    div(v-if="error") {{error}}
     div(v-if="player.state == 'GUESSING'")
       div Say what you see...
       input(v-model="guess")

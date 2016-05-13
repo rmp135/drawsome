@@ -98,6 +98,8 @@ router.post '/:gameId/:playerName', (req, res) ->
     when 'GUESS'
       switch command
         when 'READY'
+          if req.body.guess is game.players[game.turn].word
+            return res.status(400).send "That is the correct answer. Please submit another answer."
           player.state = 'READY'
           player.guess = req.body.guess
       if (game.players.every (p) -> p.state isnt "GUESSING")

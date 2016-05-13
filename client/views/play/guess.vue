@@ -22,11 +22,13 @@
 
 <template lang="pug">
   #play-guess-comp
-    div(v-if="error") {{error}}
     div(v-if="player.state == 'GUESSING'")
       div Say what you see...
-      input(v-model="guess")
-      button.btn.btn-default(@click="onGuessDone") Ready
+      .form-group(v-bind:class="{'has-error':error}")
+        input(v-model="guess" placeholder="Guess").form-control
+        .help-block(v-if="error") {{error}}
+      .form-group
+        button.btn.btn-primary(@click="onGuessDone", :disabled="!guess") Ready
     div(v-else)
       div Waiting for players...
 </template>

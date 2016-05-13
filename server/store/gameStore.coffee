@@ -1,9 +1,5 @@
 gameStore = {
-  games:[{
-    id:"1"
-    stage:"PREGAME"
-    players:[]
-    }]
+  games:[]
 }
 
 module.exports = gameStore

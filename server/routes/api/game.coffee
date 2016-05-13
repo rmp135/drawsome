@@ -19,7 +19,7 @@ router.post '/create', (req, res) ->
   game = games.find (g) -> g.id is req.body.gameId
   if not game?
     game = {
-      id:shortid.generate()
+      id:(req.body.gameId ? shortid.generate())
       stage:'PREGAME'
       players:[]
     }
@@ -34,7 +34,7 @@ router.get '/:gameId', (req, res) ->
 router.post '/:gameId/join', (req, res) ->
   game = findGameById req.params.gameId
   if not game? then return res.sendStatus 404
-  player = game.players.find (player) -> player.name is req.body.name
+  player = findPlayerInGameByName game, req.params.playerName
   if player?
     res.json {game, player}
     return

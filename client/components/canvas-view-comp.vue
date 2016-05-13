@@ -29,14 +29,14 @@
 </script>
 
 <template lang="jade">
-  #draw-comp
+  .canvas-view-comp
     canvas(v-el:canvas, :width="width", :height="width")
 </template>
 
 <style lang="scss">
-  #draw-comp {
+  .canvas-view-comp {
     canvas {
-      border:1px solid black;
+      // border:1px solid black;
     }
   }
 </style>

@@ -4,16 +4,6 @@
     name:'host-comp'
     data: ->
       gameStore:require '../store/gameStore.coffee'
-    computed:
-      hasPlayers: -> @gameStore.game.players?.length > 0
-      currentImage: -> @gameStore.game.players[@gameStore.game.turn].image
-      groupedPicks: ->
-        word = @gameStore.game.players[@gameStore.game.turn].word
-        gp = {"#{word}":[]}
-        for player in @gameStore.game.players when player.pick?
-          gp["#{player.pick}"] ?= []
-          gp["#{player.pick}"].push player.name
-        return gp
     route:
       data: (transition) ->
         if @gameStore.game.id?
@@ -32,24 +22,23 @@
         @$http.get "/api/game/#{@gameStore.game.id}"
         .then (res) ->
           @gameStore.game = res.data
-    components:[require('../components/canvas-view-comp.vue')]
+    components:[
+      require('../components/canvas-view-comp.vue')
+      require('./host/pregame.vue')
+      require('./host/avatar.vue')
+      require('./host/guess.vue')
+      require('./host/reveal.vue')
+    ]
 </script>
 
 <template lang="pug">
   #host-comp
     div Code: {{gameStore.game.id}}
     div Stage: {{gameStore.game.stage}}
-    div(v-for="player in gameStore.game.players") {{player.name}} - {{player.state}}
-      div(v-if="player.avatar")
-        canvas-view-comp(v-bind:lines="player.avatar", scale="0.2", width="100", v-bind:disabled="true")
-    div(v-if="gameStore.game.stage == 'GUESS'")
-      canvas-view-comp(v-bind:lines="currentImage")
-    div(v-if="gameStore.game.stage == 'REVEAL'")
-      canvas-view-comp(v-bind:lines="currentImage")
-      div(v-for="(pick, picker) in groupedPicks")
-        div {{pick}}
-        div(v-for="player in picker")
-          div {{player}}
+    host-pregame-comp(v-if="gameStore.game.stage == 'PREGAME'", :game="gameStore.game")
+    host-avatar-comp(v-if="gameStore.game.stage == 'AVATAR'", :game="gameStore.game")
+    host-guess-comp(v-if="gameStore.game.stage == 'GUESS'", :game="gameStore.game")
+    host-reveal-comp(v-if="gameStore.game.stage == 'REVEAL'", :game="gameStore.game")
 </template>
 
 <style lang="scss">

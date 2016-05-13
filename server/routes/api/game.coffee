@@ -71,10 +71,8 @@ router.post '/:gameId/:playerName', (req, res) ->
     when "PREGAME"
       switch command
         when 'READY'
-          player.state = 'READY'
-      if (game.players.every (p) -> p.state is "READY")
-        game.stage = 'AVATAR'
-        player.state = 'AVATAR' for player in game.players
+          game.stage = 'AVATAR'
+          player.state = 'AVATAR' for player in game.players
     when 'AVATAR'
       switch command
         when 'READY'

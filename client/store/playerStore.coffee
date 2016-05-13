@@ -1,4 +1,4 @@
 module.exports =
   player:{
-    name:"Ryan"
+    name:do -> String(Math.random())
   }

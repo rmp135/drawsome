@@ -66,7 +66,7 @@
         @points = []
 </script>
 
-<template lang="jade">
+<template lang="pug">
   #draw-comp
     canvas(v-el:canvas, :width="width", :height="width", @mousedown='beginDrawing', @touchstart='beginDrawing', @touchmove='traceLine', @touchend='endDrawing', @mouseup='endDrawing', @mousemove='traceLine')
     //- button(@click="clear") Clear

@@ -28,7 +28,7 @@
         @context.stroke()
 </script>
 
-<template lang="jade">
+<template lang="pug">
   .canvas-view-comp
     canvas(v-el:canvas, :width="width", :height="width")
 </template>

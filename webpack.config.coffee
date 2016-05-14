@@ -19,7 +19,7 @@ module.exports =
     loaders:[
       {test: /\.coffee$/, loader:'coffee-loader'},
       {test: /\.json$/, loader:'json-loader'},
-      {test: /\.jade$/, loader:'template-html-loader'},
+      {test: /\.pug$/, loader:'template-html-loader'},
       {test: /\.vue$/, loader:'vue-loader'}
       {test: /\.scss$/, loaders:['style','css', 'sass']}
     ]

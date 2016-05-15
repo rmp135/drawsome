@@ -22,14 +22,25 @@
 
 <template lang="pug">
   #play-pick-comp
-    div(v-if="player.state == 'PICKING'")
-      div(v-for="pick in picks")
-        button.btn.btn-default(@click="onPickDone(pick)") {{pick}}
-    div(v-else)
-      div Waiting for players...
+    template(v-if="player.state == 'PICKING'")
+      .text Take your pick!
+      template(v-for="pick in picks")
+        button.btn.btn-primary(@click="onPickDone(pick)") {{pick}}
+    .text(v-else) Waiting for players...
 </template>
 
 <style lang="scss">
-  #play-comp {
+  #play-pick-comp {
+    display: flex;
+    width:100%;
+    justify-content: center;
+    flex-direction: column;
+    .text {
+      font-size: 2rem;
+      text-align: center;
+    }
+    button {
+      margin:10px;
+    }
   }
 </style>

@@ -39,5 +39,8 @@
 
 <style lang="scss">
   #play-comp {
+    width:100%;
+    display: flex;
+    justify-content: center;
   }
 </style>

@@ -31,21 +31,39 @@
 </script>
 
 <template lang="pug">
-  #join-comp.container
-    .form-group(v-bind:class="{'has-error':errors.room}")
-      label(for="roomInput") Room Code
-      input#roomInput(v-model="code", placeholder="Room Code").form-control
-      .help-block(v-if="errors.room") {{errors.room}}
-    .form-group
-      label(for="nameInput") Player Name
-      input#nameInput(v-model="playerStore.player.name", placeholder="Player Name").form-control
-    .form-group
-      button(@click="onHostClick").btn.btn-primary.pull-right Host
-      button(@click="onJoinClick", :disabled="!canJoin", :class="{disabled:!canJoin}").btn.btn-primary Join
+  #join-comp
+    .container
+      .form-group(v-bind:class="{'has-error':errors.room}")
+        label(for="roomInput") Room Code
+        input#roomInput(v-model="code", placeholder="Room Code").form-control
+        .help-block(v-if="errors.room") {{errors.room}}
+      .form-group
+        label(for="nameInput") Player Name
+        input#nameInput(v-model="playerStore.player.name", placeholder="Player Name").form-control
+      .form-group.buttons
+        button(@click="onJoinClick", :disabled="!canJoin", :class="{disabled:!canJoin}").btn.btn-primary Join
+        button(@click="onHostClick").btn.btn-primary.pull-right Host
 </template>
 
 <style lang="scss">
   #join-comp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      :nth-child(1) {
+        margin-right: 10px;
+      }
+      :nth-child(2) {
+        margin-left: 10px;
+      }
+      .btn {
+        flex-grow: 1;
+        padding: 10px;
+      }
+    }
     canvas {
       border:1px solid black;
     }

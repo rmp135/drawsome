@@ -16,5 +16,10 @@
 
 <style lang="scss">
   #play-reveal-comp {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 2rem;
+    text-align: center;
   }
 </style>

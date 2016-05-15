@@ -20,15 +20,22 @@
 
 <template lang="pug">
   #play-draw-comp
-    div(v-if="player.state == 'DRAWING'")
-      div {{player.word}}
+    template(v-if="player.state == 'DRAWING'")
+      .text {{player.word}}
       canvas-comp(v-bind:lines.sync="image", :width="width", :colour="player.colour")
-      button.btn.btn-default(@click="onImageDone") Ready
-    div(v-else)
-      div Waiting for players...
+      button.btn.btn-primary(@click="onImageDone") Ready
+    template(v-else)
+      .text Waiting for players...
 </template>
 
 <style lang="scss">
-  #play-comp {
+  #play-draw-comp {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .text {
+      font-size: 2rem;
+      text-align: center;
+    }
   }
 </style>

@@ -11,8 +11,6 @@
   #host-avatar-comp
     div Waiting for players to join the game.
     div Game Code: {{game.id}}
-    //- div Current Players:
-    //- div(v-for="player in game.players") {{player.name}}
 </template>
 
 <style lang="scss">

@@ -2,6 +2,7 @@ express = require 'express'
 router = express.Router()
 shortid = require 'shortid'
 _ = require 'lodash'
+randomcolor = require 'randomcolor'
 
 {games} = require '../../store/gameStore.coffee'
 words = require '../../store/wordStore.coffee'
@@ -38,7 +39,7 @@ router.post '/:gameId/join', (req, res) ->
   if player?
     res.json {game, player}
     return
-  player =  {name:req.body.name, state:'AVATAR'}
+  player =  {name:req.body.name, state:'AVATAR', colour:randomcolor {luminosity:'dark', seed:req.body.name}}
   game.players.push player
   io.of('/').to(req.params.gameId).emit('joined', player)
   res.json {game, player}

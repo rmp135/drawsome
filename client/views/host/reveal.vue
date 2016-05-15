@@ -1,5 +1,4 @@
 <script lang="coffee">
-  randomcolor = require 'randomcolor'
   module.exports =
     name:'host-reveal-comp'
     props:
@@ -12,34 +11,31 @@
         belongsTo: ""
         pickedBy: []
     methods:
-      colourByName: (name) -> randomcolor {luminosity:'dark', seed:name}
       complete: -> 
         @$http.post "/api/game/#{@game.id}",{command:'ROUNDEND'}
     computed:
-      currentImage: -> @game.players[@game.turn].image
-      currentColour: -> @colourByName @currentPlayer.name
       currentPlayer: -> @game.players[@game.turn]
       groupedPicks: ->
         gp = []
         allguesses = @game.players
         .filter (p) -> p.guess?
-        .map (p) -> {name:p.name, word:p.guess}
+        .map (p) -> {player:p, word:p.guess}
         allpicks = @game.players
         .filter (p) -> p.pick?
-        .map (p) -> {name:p.name, word:p.pick}
+        .map (p) -> {player:p, word:p.pick}
         for guess in allguesses
           if (existing = gp.find (g) -> g.word is guess.word)
-            existing.belongsTo.push guess.name
+            existing.belongsTo.push guess.player
           else
-            gp.push {word:guess.word, isHost:false, belongsTo:[guess.name], pickedBy:[]}
+            gp.push {word:guess.word, isHost:false, belongsTo:[guess.player], pickedBy:[]}
         if not (allguesses.find (g) => g.word is @currentPlayer.word)
-          gp.push {word:@currentPlayer.word, pickedBy:[], isHost:true, belongsTo:[@currentPlayer.name]}
+          gp.push {word:@currentPlayer.word, pickedBy:[], isHost:true, belongsTo:[@currentPlayer]}
 
         for pick in allpicks
           if (existing = gp.find (g) -> g.word is pick.word)
-            existing.pickedBy.push pick.name
+            existing.pickedBy.push pick.player
           else
-            gp.push {word:pick.word, pickedBy:[pick.name]}
+            gp.push {word:pick.word, pickedBy:[pick.player]}
         gp = gp.filter (g) -> g.pickedBy.length isnt 0 or g.isHost
         return gp
     ready: ->
@@ -72,12 +68,12 @@
 
 <template lang="pug">
   #host-reveal-comp
-    canvas-view-comp(v-bind:lines="currentImage", :colour="currentColour")
+    canvas-view-comp(v-bind:lines="currentPlayer.image", :colour="currentPlayer.colour")
     #revealWrapper
-      .belongsTo(v-if="currentWord.belongsTo", :style="{color:colourByName(currentWord.belongsTo)}", transition="fade") {{currentWord.belongsTo}}'s word!
+      .belongsTo(v-if="currentWord.belongsTo", :style="{color:currentWord.belongsTo.colour}", transition="fade") {{currentWord.belongsTo.name}}'s word!
       .currentWord {{currentWord.word}}
       .pickedBy
-        .name(v-for="name in currentWord.pickedBy", :style="{color:colourByName(name)}", transition="fade") {{name}}
+        .name(v-for="player in currentWord.pickedBy", :style="{color:player.colour}", transition="fade") {{player.name}}
 </template>
 
 <style lang="scss">
@@ -97,11 +93,6 @@
       flex-direction: column;
       font-size: 3rem;
       align-items: center;
-      * {
-        // border:1px solid black;
-      }
-      .currentWord {
-      }
       .pickedBy {
         display: flex;
         .name {

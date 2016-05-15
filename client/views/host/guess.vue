@@ -1,5 +1,4 @@
 <script lang="coffee">
-  randomcolor = require 'randomcolor'
   module.exports =
     name:'host-guess-comp'
     props:
@@ -7,15 +6,14 @@
         type:Object
         required:true
     computed:
-      currentImage: -> @game.players[@game.turn].image
-      currentColour: -> randomcolor {luminosity:'dark', seed:@game.players[@game.turn].name}
+      currentPlayer: -> @game.players[@game.turn]
     components:[require('../../components/canvas-view-comp.vue')]
 </script>
 
 <template lang="pug">
   #host-guess-comp
-    .tagline(v-bind:style="{color:currentColour}") Say what you see...
-    canvas-view-comp(v-bind:lines="currentImage", :colour="currentColour")
+    .tagline Say what you see...
+    canvas-view-comp(v-bind:lines="currentPlayer.image", :colour="currentPlayer.colour")
 </template>
 
 <style lang="scss">

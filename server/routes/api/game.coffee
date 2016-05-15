@@ -17,10 +17,11 @@ io.on 'connection', (socket) ->
     socket.join gameId
 
 router.post '/create', (req, res) ->
-  game = games.find (g) -> g.id is req.body.gameId
+  gameId = if req.body.gameId is "" then null else req.body.gameId
+  game = games.find (g) -> g.id is gameId
   if not game?
     game = {
-      id:(req.body.gameId ? shortid.generate())
+      id:(gameId ? shortid.generate())
       stage:'AVATAR'
       players:[]
     }

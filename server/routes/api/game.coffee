@@ -40,7 +40,7 @@ router.post '/:gameId/join', (req, res) ->
   if player?
     res.json {game, player}
     return
-  player =  {name:req.body.name, state:'AVATAR', colour:randomcolor {luminosity:'dark', seed:req.body.name}}
+  player =  {name:req.body.name, state:'AVATAR', colour:randomcolor({luminosity:'dark', seed:req.body.name}), score:0}
   game.players.push player
   io.of('/').to(req.params.gameId).emit('joined', player)
   res.json {game, player}
@@ -62,14 +62,14 @@ router.post '/:gameId', (req, res) ->
       switch command
         when 'ROUNDEND'
           game.turn++
-          if game.turn <= game.players.length
+          if game.turn < game.players.length
             game.players[game.turn].guess = null
             game.players[game.turn].pick = null
             game.stage = "GUESS"
             for player, i in game.players when i isnt game.turn
               player.state = 'GUESSING'
           else
-            game.stage = "GAMEEND"
+            game.stage = "SCORE"
             player.state = "WAITING" for player in game.players
   io.of('/').to(game.id).emit 'STATECHANGE'
   res.json game
@@ -118,8 +118,13 @@ router.post '/:gameId/:playerName', (req, res) ->
     when 'PICK'
       switch command
         when 'READY'
+          pick = req.body.pick
           player.state = 'READY'
-          player.pick = req.body.pick
+          player.pick = pick
+          if pick is game.players[game.turn].word
+            player.score += 1000
+          else
+            player.score -= 500
       if (game.players.every (p) -> p.state in ["READY", "WAITING"])
         game.stage = 'REVEAL'
         player.state = 'READY' for player, i in game.players

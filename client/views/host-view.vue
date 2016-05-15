@@ -44,6 +44,7 @@
       require('./host/guess.vue')
       require('./host/pick.vue')
       require('./host/reveal.vue')
+      require('./host/score.vue')
     ]
 </script>
 
@@ -51,14 +52,15 @@
   #host-comp
     //- div Code: {{game.id}}
     //- div Stage: {{game.stage}}
-    player-list-comp(v-bind:players="evenPlayers").player-col.align-left
+    player-list-comp(v-bind:players="evenPlayers").align-left
     #center-col
       host-avatar-comp(v-if="game.stage == 'AVATAR'", :game="game")
       host-guess-comp(v-if="game.stage == 'GUESS'", :game="game")
       host-pick-comp(v-if="game.stage == 'PICK'", :game="game")
       host-draw-comp(v-if="game.stage == 'DRAW'", :game="game")
       host-reveal-comp(v-if="game.stage == 'REVEAL'", :game="game")
-    player-list-comp(v-bind:players="oddPlayers").player-col.align-right
+      host-score-comp(v-if="game.stage == 'SCORE'", :game="game")
+    player-list-comp(v-bind:players="oddPlayers").align-right
 
 </template>
 
@@ -75,21 +77,13 @@
       flex-shrink: 1;
       justify-content: center;
       align-items:center;
-    }
-    .player-col {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      flex-grow: 1;
-      flex-shrink: 2;
-      flex-basis: 200px;
-      padding: 5px;
-      &.align-right {
+      .align-right {
         align-items: flex-end;
       }
-      &.align-left {
+      .align-left {
         align-items: flex-start;
       }
-    } 
+
+    }
   }
 </style>

@@ -10,10 +10,12 @@
         word: ""
         belongsTo: ""
         pickedBy: []
+        correctClass:""
     methods:
       complete: -> 
         @$http.post "/api/game/#{@game.id}",{command:'ROUNDEND'}
     computed:
+      correctClass: -> if @currentWord.word is @currentPlayer.word then "correct" else "incorrect"
       currentPlayer: -> @game.players[@game.turn]
       groupedPicks: ->
         gp = []
@@ -57,12 +59,13 @@
         setTimeout (=> setPicked index+1, pickedBy, done), timings.betweenPicks
       setCurrentWord = (index, words, done) =>
         if index is words.length then return setTimeout done, timings.afterComplete
-        @currentWord = {word: words[index].word, belongsTo:"", pickedBy:[]}
+        @currentWord = {word: words[index].word, belongsTo:"", pickedBy:[], correctClass:"wait"}
         setTimeout =>
           @currentWord.belongsTo = words[index].belongsTo[0]
+          @currentWord.correctClass = @correctClass
           setTimeout (=> setPicked 0, words[index].pickedBy, (=> setBelongsTo 1, words[index].belongsTo, (=> setCurrentWord index+1, words, done))), timings.betweenWords
         , 1000
-      setTimeout (=> setCurrentWord 0, @groupedPicks, @complete), timings.begin
+      setCurrentWord 0, @groupedPicks, @complete
     components:[require('../../components/canvas-view-comp.vue')]
 </script>
 
@@ -71,7 +74,7 @@
     canvas-view-comp(v-bind:lines="currentPlayer.image", :colour="currentPlayer.colour")
     #revealWrapper
       .belongsTo(v-if="currentWord.belongsTo", :style="{color:currentWord.belongsTo.colour}", transition="fade") {{currentWord.belongsTo.name}}'s word!
-      .currentWord {{currentWord.word}}
+      .currentWord(v-bind:class="currentWord.correctClass", transition="fade" ) {{currentWord.word}}
       .pickedBy
         .name(v-for="player in currentWord.pickedBy", :style="{color:player.colour}", transition="fade") {{player.name}}
 </template>
@@ -93,6 +96,23 @@
       flex-direction: column;
       font-size: 3rem;
       align-items: center;
+      .currentWord {
+        border-radius: 10px;
+        padding:10px;
+        &.wait {
+          transition: all 0s linear;
+        }
+        &.correct {
+          color:white;
+          background-color:#27ae60;
+        }
+        &.incorrect {
+          color:white;
+          background-color:#c0392b;
+          border-radius: 10px;
+          padding:10px;
+        }
+      }
       .pickedBy {
         display: flex;
         .name {

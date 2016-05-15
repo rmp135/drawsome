@@ -19,6 +19,13 @@
 
 <style lang="scss">
   .player-list-comp {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-grow: 1;
+    flex-shrink: 2;
+    flex-basis: 200px;
+    padding: 5px;
     .player {
       display: flex;
       align-items:center;

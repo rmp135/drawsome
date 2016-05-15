@@ -10,9 +10,9 @@
         type:Number
         default:500
         coerce: (val) -> Number val
-      disabled:
-        type:Boolean
-        default:false
+      colour:
+        type:String
+        default: "#000000"
     data: ->
       points:[]
       isDrawing: false
@@ -21,6 +21,7 @@
     ready: ->
       @context.lineWidth = 10
       @context.lineJoin = @context.lineCap = 'round'
+      @context.strokeStyle = @colour
       if @lines.length > 0
         @context.beginPath()
         @context.moveTo @lines[0][0], @lines[0][1]

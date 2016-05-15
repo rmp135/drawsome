@@ -9,7 +9,12 @@
         type:Object
         requird:true
     computed:
-      picks: -> ((@game.players.filter (p, i) => p.name isnt @player.name and i isnt @game.turn).map (p) -> p.guess).concat (@game.players[@game.turn]).word
+      picks: -> 
+        playerGuesses = @game.players
+        .filter (p) => p.name isnt @player.name and p.guess?
+        .map (p) -> p.guess
+        .filter (g, i, self) => self.indexOf(g) is i and g isnt @player.guess
+        playerGuesses.concat (@game.players[@game.turn]).word
     methods:
       onPickDone: (pick) ->
         @$http.post "/api/game/#{@game.id}/#{@player.name}",{command:'READY', pick}

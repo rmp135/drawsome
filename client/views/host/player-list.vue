@@ -23,12 +23,8 @@
       display: flex;
       align-items:center;
       flex-direction: column;
-      // margin-right:50px;
     }
     .no-avatar {
-      // display: flex;
-      // align-content: center;
-      // justify-content: center;
       text-align: center;
       line-height: 100px;
       font-size:100px;

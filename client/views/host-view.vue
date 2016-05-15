@@ -42,7 +42,6 @@
       require('./host/avatar.vue')
       require('./host/draw.vue')
       require('./host/guess.vue')
-      require('./host/pick.vue')
       require('./host/reveal.vue')
       require('./host/score.vue')
     ]
@@ -55,8 +54,7 @@
     player-list-comp(v-bind:players="evenPlayers").align-left
     #center-col
       host-avatar-comp(v-if="game.stage == 'AVATAR'", :game="game")
-      host-guess-comp(v-if="game.stage == 'GUESS'", :game="game")
-      host-pick-comp(v-if="game.stage == 'PICK'", :game="game")
+      host-guess-comp(v-if="game.stage == 'GUESS' || game.stage == 'PICK'", :game="game")
       host-draw-comp(v-if="game.stage == 'DRAW'", :game="game")
       host-reveal-comp(v-if="game.stage == 'REVEAL'", :game="game")
       host-score-comp(v-if="game.stage == 'SCORE'", :game="game")

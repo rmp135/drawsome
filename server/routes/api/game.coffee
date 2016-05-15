@@ -9,6 +9,7 @@ words = require '../../store/wordStore.coffee'
 
 findGameById = (id) -> games.find (game) -> game.id is id
 findPlayerInGameByName = (game, name) -> game.players.find (p) -> p.name is name
+scaleImage = (image, scale) -> image.map (l) -> l.map (v) -> v.map (c) -> Math.round((c * scale)*100)/100
 
 io = require '../../socket.coffee'
 
@@ -86,7 +87,7 @@ router.post '/:gameId/:playerName', (req, res) ->
       switch command
         when 'READY'
           player.state = 'READY'
-          player.avatar = req.body.avatar
+          player.avatar = scaleImage req.body.avatar, 100 / req.body.width
         when 'ALLREADY'
           game.stage = 'DRAW'
           player.state = 'DRAW' for player in game.players
@@ -98,7 +99,7 @@ router.post '/:gameId/:playerName', (req, res) ->
       switch command
         when 'READY'
           player.state = 'READY'
-          player.image = req.body.image
+          player.image = scaleImage req.body.image, 100 / req.body.width
       if (game.players.every (p) -> p.state is "READY")
         game.stage = "GUESS"
         game.turn = 0

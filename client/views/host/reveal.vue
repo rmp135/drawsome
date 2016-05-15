@@ -71,7 +71,7 @@
 
 <template lang="pug">
   #host-reveal-comp
-    canvas-view-comp(v-bind:lines="currentPlayer.image", :colour="currentPlayer.colour")
+    canvas-view-comp(v-bind:lines="currentPlayer.image", :colour="currentPlayer.colour", scale="5")
     #revealWrapper
       .belongsTo(v-if="currentWord.belongsTo", :style="{color:currentWord.belongsTo.colour}", transition="fade") {{currentWord.belongsTo.name}}'s word!
       .currentWord(v-bind:class="currentWord.correctClass", transition="fade" ) {{currentWord.word}}

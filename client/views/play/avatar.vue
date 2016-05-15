@@ -16,7 +16,7 @@
     methods:
       pluralise: (word, base) -> if base is 1 then word else "#{word}s"
       onReadyClick: ->
-        @$http.post "/api/game/#{@game.id}/#{@player.name}",{command:'READY', avatar:@avatar}
+        @$http.post "/api/game/#{@game.id}/#{@player.name}",{command:'READY', avatar:@avatar, width:@width}
       onStartClick: ->
         @$http.post "/api/game/#{@game.id}/#{@player.name}",{command:'ALLREADY'}
     components:[require('../../components/canvas-comp.vue')]

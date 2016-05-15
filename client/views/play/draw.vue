@@ -14,7 +14,7 @@
       width: -> [document.body.offsetWidth-10, 500].reduce (w, w2) -> if w < w2 then w else w2
     methods:
       onImageDone: ->
-        @$http.post "/api/game/#{@game.id}/#{@player.name}",{command:'READY', image:@image}
+        @$http.post "/api/game/#{@game.id}/#{@player.name}",{command:'READY', image:@image, width:@width}
     components:[require('../../components/canvas-comp.vue')]
 </script>
 

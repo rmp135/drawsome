@@ -12,7 +12,7 @@
   .player-list-comp
     .player(v-for="player in players")
       .avatar
-        canvas-view-comp(v-if="player.avatar", :lines="player.avatar", :width=100, :scale=0.2, :colour="player.colour")
+        canvas-view-comp(v-if="player.avatar", :lines="player.avatar", :width=100, :colour="player.colour")
         div(v-else, :style="{color:player.colour}").no-avatar ?
       .player(v-bind:style="{color:player.colour}") {{player.name}}
 </template>

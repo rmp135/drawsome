@@ -13,12 +13,16 @@
         type:Number
         default:1
         coerce: (val) -> Number val
+      colour:
+        type:String
+        default: "#000000"
     computed:
       context: -> @$els.canvas.getContext '2d'
       scaledLines: -> @lines.map (l) => l.map (p) => [p[0]*@scale, p[1]*@scale]
     ready: ->
       @context.lineWidth = @scale*10
       @context.lineJoin = @context.lineCap = 'round'
+      @context.strokeStyle = @colour
       for line in @scaledLines
         @context.beginPath()
         @context.moveTo @lines[0][0], @lines[0][1]
@@ -35,8 +39,7 @@
 
 <style lang="scss">
   .canvas-view-comp {
-    canvas {
-      // border:1px solid black;
-    }
+    display: flex;
+    justify-content: center;
   }
 </style>

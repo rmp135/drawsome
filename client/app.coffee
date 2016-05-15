@@ -39,7 +39,7 @@ test = {
       if index is @from.length then return done()
       @currentWord = {word:@from[index].word, belongsTo:"#{@from[index].belongsTo[0]}'s word!", pickedBy:[]}
       setTimeout (=> setPicked 0, @from[index].pickedBy, (=> setBelongsTo 1, @from[index].belongsTo, (=> setCurrentWord index+1, done))), 1000
-    setCurrentWord 0, -> console.log 'done!'
+    setTimout (=> setCurrentWord 0, -> console.log 'done!'), 20
 }
 
 router.map

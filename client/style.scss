@@ -6,3 +6,15 @@
 body {
     font-family: 'Roboto', sans-serif;
 }
+
+html, body, #app {
+  height:100%
+}
+
+#app > * {
+  height: 100%;
+}
+
+.border {
+  border:1px black solid;
+}

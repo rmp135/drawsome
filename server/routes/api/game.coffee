@@ -55,11 +55,23 @@ router.post '/:gameId', (req, res) ->
   command = req.body.command
   if not game? then return res.sendStatus 404
   if not command? then return res.sendStatus 403
+  switch game.stage
+    when 'REVEAL'
+      switch command
+        when 'ROUNDEND'
+          game.turn++
+          if game.turn <= game.players.length
+            game.players[game.turn].guess = null
+            game.players[game.turn].pick = null
+            game.stage = "GUESS"
+            for player, i in game.players when i isnt game.turn
+              player.state = 'GUESSING'
+          else
+            game.stage = "GAMEEND"
+            player.state = "WAITING" for player in game.players
+  io.of('/').to(game.id).emit 'STATECHANGE'
   res.json game
-  # switch game.state
-  #   when 'REVEAL'
-  #     switch command
-  #       when 'STAGEEND'
+
 
 router.post '/:gameId/:playerName', (req, res) ->
   game = findGameById req.params.gameId
@@ -93,7 +105,7 @@ router.post '/:gameId/:playerName', (req, res) ->
         game.stage = "GUESS"
         game.turn = 0
         game.players[0].state = "WAITING"
-        for player, i in game.players when i isnt 0
+        for player, i in game.players when i isnt game.turn
           player.state = 'GUESSING'
     when 'GUESS'
       switch command

@@ -25,6 +25,7 @@
       require('./play/draw.vue')
       require('./play/guess.vue')
       require('./play/pick.vue')
+      require('./play/reveal.vue')
     ]
 </script>
 
@@ -35,6 +36,7 @@
     play-draw-comp(v-if="gameStage == 'DRAW'", :game="gameStore.game", :player="playerStore.player")
     play-guess-comp(v-if="gameStage == 'GUESS'", :game="gameStore.game", :player="playerStore.player")
     play-pick-comp(v-if="gameStage == 'PICK'", :game="gameStore.game", :player="playerStore.player")
+    play-reveal-comp(v-if="gameStage == 'REVEAL'", :game="gameStore.game", :player="playerStore.player")
 </template>
 
 <style lang="scss">

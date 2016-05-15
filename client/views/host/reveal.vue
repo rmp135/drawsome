@@ -61,7 +61,7 @@
         if index is words.length then return setTimeout done, timings.afterComplete
         @currentWord = {word: words[index].word, belongsTo:"", pickedBy:[], correctClass:"wait"}
         setTimeout =>
-          @currentWord.belongsTo = words[index].belongsTo[0]
+          if @currentPlayer.word isnt words[index].word then @currentWord.belongsTo = words[index].belongsTo[0]
           @currentWord.correctClass = @correctClass
           setTimeout (=> setPicked 0, words[index].pickedBy, (=> setBelongsTo 1, words[index].belongsTo, (=> setCurrentWord index+1, words, done))), timings.betweenWords
         , 1000

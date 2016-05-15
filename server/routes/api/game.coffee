@@ -20,7 +20,7 @@ router.post '/create', (req, res) ->
   if not game?
     game = {
       id:(req.body.gameId ? shortid.generate())
-      stage:'PREGAME'
+      stage:'AVATAR'
       players:[]
     }
     games.push game
@@ -38,7 +38,7 @@ router.post '/:gameId/join', (req, res) ->
   if player?
     res.json {game, player}
     return
-  player =  {name:req.body.name, state:'WAITING'}
+  player =  {name:req.body.name, state:'AVATAR'}
   game.players.push player
   io.of('/').to(req.params.gameId).emit('joined', player)
   res.json {game, player}
@@ -80,22 +80,18 @@ router.post '/:gameId/:playerName', (req, res) ->
   command = req.body.command
   if not player? or not command? then return res.sendStatus 403
   switch game.stage
-    when "PREGAME"
-      switch command
-        when 'READY'
-          game.stage = 'AVATAR'
-          player.state = 'AVATAR' for player in game.players
     when 'AVATAR'
       switch command
         when 'READY'
           player.state = 'READY'
           player.avatar = req.body.avatar
-      if (game.players.every (p) -> p.state is "READY")
-        game.stage = "DRAW"
-        gameWords = _.sampleSize(words, game.players.length).map (w) -> w.toLowerCase()
-        for player, i in game.players
-          player.state = 'DRAWING'
-          player.word = gameWords[i]
+        when 'ALLREADY'
+          game.stage = 'DRAW'
+          player.state = 'DRAW' for player in game.players
+          gameWords = _.sampleSize(words, game.players.length).map (w) -> w.toLowerCase()
+          for player, i in game.players
+            player.state = 'DRAWING'
+            player.word = gameWords[i]
     when 'DRAW'
       switch command
         when 'READY'
@@ -104,7 +100,7 @@ router.post '/:gameId/:playerName', (req, res) ->
       if (game.players.every (p) -> p.state is "READY")
         game.stage = "GUESS"
         game.turn = 0
-        game.players[0].state = "WAITING"
+        game.players[game.turn].state = "WAITING"
         for player, i in game.players when i isnt game.turn
           player.state = 'GUESSING'
     when 'GUESS'

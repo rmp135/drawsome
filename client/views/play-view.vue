@@ -20,7 +20,6 @@
           @gameStore.game = res.data.game
           @playerStore.player = res.data.player
     components:[
-      require('./play/pregame.vue')
       require('./play/avatar.vue')
       require('./play/draw.vue')
       require('./play/guess.vue')
@@ -31,7 +30,6 @@
 
 <template lang="pug">
   #play-comp
-    play-pregame-comp(v-if="gameStage == 'PREGAME'", :game="gameStore.game", :player="playerStore.player")
     play-avatar-comp(v-if="gameStage == 'AVATAR'", :game="gameStore.game", :player="playerStore.player")
     play-draw-comp(v-if="gameStage == 'DRAW'", :game="gameStore.game", :player="playerStore.player")
     play-guess-comp(v-if="gameStage == 'GUESS'", :game="gameStore.game", :player="playerStore.player")

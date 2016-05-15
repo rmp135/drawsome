@@ -39,7 +39,7 @@
           @game = res.data
     components:[
       require('./host/player-list.vue')
-      require('./host/pregame.vue')
+      require('./host/avatar.vue')
       require('./host/draw.vue')
       require('./host/guess.vue')
       require('./host/pick.vue')
@@ -53,7 +53,7 @@
     //- div Stage: {{game.stage}}
     player-list-comp(v-bind:players="evenPlayers").player-col.align-left
     #center-col
-      host-pregame-comp(v-if="game.stage == 'PREGAME' || game.stage == 'AVATAR'", :game="game")
+      host-avatar-comp(v-if="game.stage == 'AVATAR'", :game="game")
       host-guess-comp(v-if="game.stage == 'GUESS'", :game="game")
       host-pick-comp(v-if="game.stage == 'PICK'", :game="game")
       host-draw-comp(v-if="game.stage == 'DRAW'", :game="game")

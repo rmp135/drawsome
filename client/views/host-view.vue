@@ -42,6 +42,7 @@
       require('./host/avatar.vue')
       require('./host/draw.vue')
       require('./host/guess.vue')
+      require('./host/pick.vue')
       require('./host/reveal.vue')
       require('./host/score.vue')
     ]
@@ -49,12 +50,11 @@
 
 <template lang="pug">
   #host-comp
-    //- div Code: {{game.id}}
-    //- div Stage: {{game.stage}}
     player-list-comp(v-bind:players="evenPlayers").align-left
     #center-col
       host-avatar-comp(v-if="game.stage == 'AVATAR'", :game="game")
-      host-guess-comp(v-if="game.stage == 'GUESS' || game.stage == 'PICK'", :game="game")
+      host-guess-comp(v-if="game.stage == 'GUESS'", :game="game")
+      host-pick-comp(v-if="game.stage == 'PICK'", :game="game")
       host-draw-comp(v-if="game.stage == 'DRAW'", :game="game")
       host-reveal-comp(v-if="game.stage == 'REVEAL'", :game="game")
       host-score-comp(v-if="game.stage == 'SCORE'", :game="game")
@@ -71,7 +71,7 @@
     align-content:stretch;
     #center-col {
       display: flex;
-      flex-grow:3;
+      flex-grow:10;
       flex-shrink: 1;
       justify-content: center;
       align-items:center;

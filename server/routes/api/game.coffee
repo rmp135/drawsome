@@ -4,8 +4,8 @@ shortid = require 'shortid'
 _ = require 'lodash'
 randomcolor = require 'randomcolor'
 
+wordService = require '../../services/wordService.coffee'
 {games} = require '../../store/gameStore.coffee'
-words = require '../../store/wordStore.coffee'
 
 findGameById = (id) -> games.find (game) -> game.id is id
 findPlayerInGameByName = (game, name) -> game.players.find (p) -> p.name is name
@@ -91,7 +91,7 @@ router.post '/:gameId/:playerName', (req, res) ->
         when 'ALLREADY'
           game.stage = 'DRAW'
           player.state = 'DRAW' for player in game.players
-          gameWords = _.sampleSize(words, game.players.length).map (w) -> w.toLowerCase()
+          gameWords = wordService.generateWords game.players.length
           for player, i in game.players
             player.state = 'DRAWING'
             player.word = gameWords[i]

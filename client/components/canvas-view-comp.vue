@@ -20,7 +20,7 @@
       context: -> @$els.canvas.getContext '2d'
       scaledLines: -> @lines.map (l) => l.map (v) => v.map (c) => c * @scale
     ready: ->
-      @context.lineWidth = @scale*5
+      @context.lineWidth = @scale*2
       @context.lineJoin = @context.lineCap = 'round'
       @context.strokeStyle = @colour
       for line in @scaledLines

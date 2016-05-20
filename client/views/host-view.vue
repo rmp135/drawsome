@@ -5,8 +5,8 @@
     data: ->
       gameStore:require '../store/gameStore.coffee'
     computed:
-      game: 
-        get: -> @gameStore.game ? {}
+      game:
+        get: -> @gameStore.game
         set: (game) -> @gameStore.game = game
       evenPlayers: ->
         if not @game.players? then return []
@@ -31,12 +31,15 @@
           @game = null
           transition.abort()
     ready: ->
-      socket.on 'joined', (player) =>
+      socket.on 'JOINED', (player) =>
         @game.players.push player
       socket.on 'STATECHANGE', =>
         @$http.get "/api/game/#{@game.id}"
         .then (res) ->
           @game = res.data
+    destroyed: ->
+      socket.removeAllListeners 'JOINED'
+      socket.removeAllListeners 'STATECHANGE'
     components:[
       require('./host/player-list.vue')
       require('./host/avatar.vue')

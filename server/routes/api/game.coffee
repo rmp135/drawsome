@@ -43,7 +43,7 @@ router.post '/:gameId/join', (req, res) ->
     return res.json {game, player}
   player =  {name:req.body.playerName, state:'AVATAR', colour:randomcolor({luminosity:'dark', seed:req.body.playerName}), score:0}
   game.players.push player
-  io.of('/').to(req.params.gameId).emit('joined', player)
+  io.of('/').to(req.params.gameId).emit('JOINED', player)
   res.json {game, player}
 
 router.get '/:gameId/:playerName', (req, res) ->

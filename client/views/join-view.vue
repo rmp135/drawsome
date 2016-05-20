@@ -18,7 +18,7 @@
           @gameStore.game = res.data
           @$router.go {name:'host', params:{gameId:res.data.id}}
       onJoinClick: ->
-        @$http.post "/api/game/#{@code}/join", {name:@playerStore.player.name}
+        @$http.post "/api/game/#{@code}/join", {playerName:@playerStore.player.name}
         .then (res) ->
           @gameStore.game = res.data.game
           @playerStore.player = res.data.player
@@ -26,6 +26,8 @@
         .catch (err) ->
           if err.status is 404
             @errors.room = "Room does not exist."
+          else
+            @errors.player = err.data
 
     components:[require('../components/canvas-comp.vue')]
 </script>
@@ -37,9 +39,10 @@
         label(for="roomInput") Room Code
         input#roomInput(v-model="code", placeholder="Room Code").form-control
         .help-block(v-if="errors.room") {{errors.room}}
-      .form-group
+      .form-group(v-bind:class="{'has-error':errors.player}")
         label(for="nameInput") Player Name
         input#nameInput(v-model="playerStore.player.name", placeholder="Player Name").form-control
+        .help-block(v-if="errors.player") {{errors.player}}
       .form-group.buttons
         button(@click="onJoinClick", :disabled="!canJoin", :class="{disabled:!canJoin}").btn.btn-primary Join
         button(@click="onHostClick").btn.btn-primary.pull-right Host

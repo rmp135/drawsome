@@ -36,12 +36,12 @@ router.get '/:gameId', (req, res) ->
 
 router.post '/:gameId/join', (req, res) ->
   game = findGameById req.params.gameId
-  if not game? then return res.sendStatus 404
-  player = findPlayerInGameByName game, req.params.playerName
+  if not game? then return res.send 404
+  if req.body.playerName is "_host" then return res.status(400).send "Reserved player name. Please pick another."
+  player = findPlayerInGameByName game, req.body.playerName
   if player?
-    res.json {game, player}
-    return
-  player =  {name:req.body.name, state:'AVATAR', colour:randomcolor({luminosity:'dark', seed:req.body.name}), score:0}
+    return res.json {game, player}
+  player =  {name:req.body.playerName, state:'AVATAR', colour:randomcolor({luminosity:'dark', seed:req.body.playerName}), score:0}
   game.players.push player
   io.of('/').to(req.params.gameId).emit('joined', player)
   res.json {game, player}

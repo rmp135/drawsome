@@ -36,7 +36,7 @@ router.get '/:gameId', (req, res) ->
 
 router.post '/:gameId/join', (req, res) ->
   game = findGameById req.params.gameId
-  if not game? then return res.send 404
+  if not game? then return res.sendStatus 404
   if req.body.playerName is "_host" then return res.status(400).send "Reserved player name. Please pick another."
   player = findPlayerInGameByName game, req.body.playerName
   if player?

@@ -1,16 +1,4 @@
 module.exports = {
-  extras:[
-    "on a skateboard"
-    "with an icelolly"
-    "on fire"
-    "without a care"
-  ]
-  nouns:[
-    "seahorse"
-    "manticore"
-    "hat"
-    "man"
-  ]
   adjectives:[
     "cheesy"
     "funky"
@@ -21,6 +9,54 @@ module.exports = {
     "careless"
     "amusing"
     "flaming"
+    "pooping"
+    "dissappointing"
+    "disgusting"
+    "ungrateful"
+    "slimy"
+    "slippery"
+    "squelchy"
+    "squirty"
+    "spunky"
+    "aggressive"
+    "twisted"
+  ]
+  nouns:[
+    "seahorse"
+    "manticore"
+    "hat"
+    "man"
+    "cat"
+    "star destroyer"
+    "usain bolt"
+    "boaty mcboatface"
+    "ainsley harriot"
+    "evaldas"
+    "fruit bat"
+    "wacko jacko"
+    "man bear pig"
+    "loch ness monster"
+    "easter egg"
+    "pizza"
+    "ham"
+    "badger"
+    "frigemaster"
+    "radiation"
+  ]
+  extras:[
+    "on a skateboard"
+    "with an icelolly"
+    "on fire"
+    "without a care"
+    "playing twister"
+    "sitting in a tree"
+    "falling over"
+    "bending over"
+    "flying"
+    "crying intensly"
+    "loving life"
+    "dying slowly"
+    "drinking a special brew"
   ]
   prebuilds:[
     "where missing socks go"
@@ -57,5 +93,15 @@ module.exports = {
     "the cleaning lady comes on monday"
     "chris wants to see you in his office"
     "there's a snake in my boot"
+    "fake plant"
+    "wizard tower"
+    "death by asphixiation"
+    "tree fiddy"
+    "banana phone"
+    "bananas in pyjamas"
+    "archery class"
+    "foam motorycle"
+    "nathan in his new job"
+    "lady gaga"
   ]
 }

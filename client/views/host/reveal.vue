@@ -38,7 +38,9 @@
             existing.pickedBy.push pick.player
           else
             gp.push {word:pick.word, pickedBy:[pick.player]}
-        gp = gp.filter (g) -> g.pickedBy.length isnt 0 or g.isHost
+        gp = gp
+        .filter (g) -> g.pickedBy.length isnt 0 or g.isHost
+        .sort (g1, g2) -> if g2.isHost then 0 else (g2.pickedBy.length - g1.pickedBy.length)+1
         return gp
     ready: ->
       timings = {
